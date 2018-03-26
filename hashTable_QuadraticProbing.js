@@ -16,10 +16,34 @@ HashTable.prototype.isFull= function() {
     return this.count === this.array.length;
 }
 
-HashTable.prototype.insert = function(key, value) {
-    var i = base = key % this.array.length;
+HashTable.prototype.hashFunction = function (key) {
+    const keyType = typeof key;
 
-    var step = 1;
+    const getASCIISumOf = (text) => {
+        let sum = 0;
+        for (let i = 0; i <= text.length - 1; i++) {
+            sum += text.charCodeAt(i);
+        }
+        return sum;
+    }
+
+    switch (keyType) {
+        case "number":
+            return key % this.array.length;
+            break;
+        case "string":
+            return getASCIISumOf(key) % this.array.length;
+            break;
+        default:
+            throw "invalid key";
+    }
+}
+
+HashTable.prototype.insert = function (key, value) {
+    // get hash index
+    var i = base = this.hashFunction(key);
+    
+    let step = 1;
 
     // handle collision
     while (this.array[i]) {
@@ -35,7 +59,7 @@ HashTable.prototype.insert = function(key, value) {
 
 HashTable.prototype.find = function(key) {
     // get hash index
-    var i = base = key % this.array.length;
+    var i = base = this.hashFunction(key);
 
     var step = 1;
     while(true) {
@@ -54,7 +78,7 @@ HashTable.prototype.find = function(key) {
 
 HashTable.prototype.remove = function(key) {
     // get hash index
-    var i = base = key % this.array.length;
+    var i = base = this.hashFunction(key);
     
     var step = 1;
     while(true) {
@@ -78,14 +102,22 @@ const logOut = console.log;
 const logHashTable = (table) => {
     console.log(table.array);
 }
-var table = new HashTable(0);
+var table = new HashTable(5);
 logOut(table.insert(8, "hello"));
 logHashTable(table);
+
 logOut(table.insert(3, "bye"));
 logHashTable(table);
-logOut(table.insert(8, "hi"));
+
+logOut(table.insert("greetings", {
+    "english": "Hello",
+    "spanish": "Halo",
+    "french": "Bonjour",
+    "yoruba": "Bawo"
+}));
 logHashTable(table);
-logOut(table.find(8));
+
+logOut(table.remove(3));
 logHashTable(table);
-// logOut(table.remove(3));
-// logHashTable(table);
+
+logOut(table.find("greetings").english);
