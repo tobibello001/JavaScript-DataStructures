@@ -74,10 +74,18 @@ HashTable.prototype.remove = function(key) {
     }
 
 }
-
-var table = new HashTable(5);
-table.insert(8, "hello");
-table.insert(3, "bye");
-table.insert(8, "hi");
-table.find(7);
-table.remove(3);
+const logOut = console.log;
+const logHashTable = (table) => {
+    console.log(table.array);
+}
+var table = new HashTable(0);
+logOut(table.insert(8, "hello"));
+logHashTable(table);
+logOut(table.insert(3, "bye"));
+logHashTable(table);
+logOut(table.insert(8, "hi"));
+logHashTable(table);
+logOut(table.find(8));
+logHashTable(table);
+// logOut(table.remove(3));
+// logHashTable(table);
