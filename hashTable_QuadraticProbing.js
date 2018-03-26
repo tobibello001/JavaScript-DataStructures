@@ -42,7 +42,7 @@ HashTable.prototype.hashFunction = function (key) {
 HashTable.prototype.insert = function (key, value) {
     // get hash index
     var i = base = this.hashFunction(key);
-    
+
     let step = 1;
 
     // handle collision
@@ -98,15 +98,27 @@ HashTable.prototype.remove = function (key) {
     }
 
 }
+
 const logOut = console.log;
 const logHashTable = (table) => {
     console.log(table.array);
 }
-var table = new HashTable(5);
-logOut(table.insert(8, "hello"));
+var table = new HashTable(255);
+
+logOut(table.insert("foo","bar"));
 logHashTable(table);
 
-logOut(table.insert(3, "bye"));
+logOut(table.insert(130805001, {
+    "name": "Tobi Bello",
+    "matricNumber": 130805001,
+}));
+logHashTable(table);
+
+logOut(table.insert("unilag", {
+    "name": "University of lagos",
+    "slug": "unilag",
+    "address":"Akoka, Yaba"
+}));
 logHashTable(table);
 
 logOut(table.insert("greetings", {
@@ -117,7 +129,7 @@ logOut(table.insert("greetings", {
 }));
 logHashTable(table);
 
-logOut(table.remove(3));
+logOut(table.remove("foo"));
 logHashTable(table);
 
 logOut(table.find("greetings").english);
