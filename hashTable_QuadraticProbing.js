@@ -86,7 +86,7 @@ HashTable.prototype.remove = function (key) {
             return "not found"
         }
         else if (this.array[i].key === key) {
-            this.array[i] = -1;
+            this.array[i] = undefined;
             this.count--;
             return true;
             break;
