@@ -2,17 +2,17 @@
  * Hash Table - Quadratic Probing
 */
 
-var HashEntry = function(key, value) {
+var HashEntry = function (key, value) {
     this.key = key;
     this.value = value;
 }
 
-var HashTable = function(size) {
+var HashTable = function (size = 127) {
     this.array = new Array(size);
     this.count = 0;
 }
 
-HashTable.prototype.isFull= function() {
+HashTable.prototype.isFull = function () {
     return this.count === this.array.length;
 }
 
@@ -47,7 +47,7 @@ HashTable.prototype.insert = function (key, value) {
 
     // handle collision
     while (this.array[i]) {
-        i = (base+step*step) % this.array.length;
+        i = (base + step * step) % this.array.length;
         step++;
     }
 
@@ -57,12 +57,12 @@ HashTable.prototype.insert = function (key, value) {
     return true;
 }
 
-HashTable.prototype.find = function(key) {
+HashTable.prototype.find = function (key) {
     // get hash index
     var i = base = this.hashFunction(key);
 
     var step = 1;
-    while(true) {
+    while (true) {
         if (!this.array[i]) {
             return "not found"
         }
@@ -70,29 +70,29 @@ HashTable.prototype.find = function(key) {
             return this.array[i].value;
         }
         else {
-            i = (base+step*step) % this.array.length;
+            i = (base + step * step) % this.array.length;
         }
         step++;
     }
 }
 
-HashTable.prototype.remove = function(key) {
+HashTable.prototype.remove = function (key) {
     // get hash index
     var i = base = this.hashFunction(key);
-    
+
     var step = 1;
-    while(true) {
+    while (true) {
         if (!this.array[i]) {
             return "not found"
         }
         else if (this.array[i].key === key) {
-            this.array[i] = -1;  
-            this.count--; 
+            this.array[i] = -1;
+            this.count--;
             return true;
             break;
         }
         else {
-            i = (base+step*step) % this.array.length;
+            i = (base + step * step) % this.array.length;
         }
         step++;
     }
