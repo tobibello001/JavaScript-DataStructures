@@ -30,6 +30,7 @@ HashTable.prototype.insert = function(key, value) {
     // insert
     this.array[i] = new HashEntry(key, value);
     this.count++;
+    return true;
 }
 
 HashTable.prototype.find = function(key) {
@@ -63,6 +64,7 @@ HashTable.prototype.remove = function(key) {
         else if (this.array[i].key === key) {
             this.array[i] = -1;  
             this.count--; 
+            return true;
             break;
         }
         else {
